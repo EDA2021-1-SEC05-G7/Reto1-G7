@@ -47,7 +47,7 @@ def loadData(catalog):
     cada uno de ellos, se crea en la lista de autores, a dicho autor y una
     referencia al libro que se esta procesando.
     """
-    videosfile = cf.data_dir + 'videos-5pct.csv'
+    videosfile = cf.data_dir + 'videos-large.csv'
     input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
     for video in input_file:
         model.addVideo(catalog, video)
@@ -63,8 +63,8 @@ def loadData(catalog):
 #print(newCategory(catalog))
 #print(model.translateCategory("music",catalog))
 #print(model.req1(catalog,"Music","canada",0))
-
-
+#print(req3(catalog,"music"))
+#print(firstVideo(catalog))
 
 
 
@@ -74,7 +74,6 @@ def firstVideo(catalog):
     Pvideo = model.first(catalog['ListCompleteVidAll'])
     return Pvideo
 
-#print(firstVideo(catalog))
 
 # Funciones de ordenamiento
 
@@ -88,3 +87,8 @@ def sortVideos(catalog,size,orden):
 
 def req2(catalog, country):
     return model.req2(catalog, country)
+
+def req3(catalog,category):
+    result = model.req3(catalog,category)
+    return result
+

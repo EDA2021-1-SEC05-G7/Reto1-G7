@@ -119,7 +119,8 @@ while True:
         
     elif int(inputs[0]) == 4:
         print('Encontrar videos tendencias por categoría')
-    
+        category = input("Ingrese la categoria de la cual quiera saber el video que más fue tendencia: ")
+        print(controller.req3(catalog,category))
     elif int(inputs[0]) == 5:
         print('Buscar los videos con mas likes')
 

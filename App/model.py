@@ -192,4 +192,26 @@ def req2(catalog,country):
 
     (a, b) = max((dictitles[key], key) for key in dictitles)
     
-    return {'title': b, 'channel_title': dicsave[b]['channel_title'], 'countr': country, 'número de días': a}
+    return {'title': b, 'channel_title': dicsave[b]['channel_title'], 'country': country, 'número de días': a}
+
+def req3(catalog, category):
+    idd = translateCategory(category,catalog)
+    titles = catalog["ListCompleteVidAll"]
+    grande = 0
+    peq = 0
+    cats = {}
+    dick = {}
+    iterator = it.newIterator(titles)
+    while it.hasNext(iterator):
+        element = it.next(iterator)
+        if element["category_id"] == idd:
+            if element['title'] in cats:
+                cats[element["title"]] += 1
+            else:
+                cats[element["title"]] = 1
+                dick[element["title"]] = element
+
+    (a, b) = max((cats[key], key) for key in cats)
+    
+    return {'title': b, 'channel_title': dick[b]['channel_title'], 'category_id': dick[b]["category_id"], 'número de días': a}
+ 
