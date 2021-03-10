@@ -97,37 +97,7 @@ def req1(catalog,name,country,size):
             lt.addLast(nl,newdict)
     return nl
 
-    """def newVideo(catalog):
-    lvid = lt.newList(datastructure="ARRAY_LIST")
-    iterator = it.newIterator(catalog["ListCompleteVidAll"])
-    while it.hasNext(iterator):
-        vid = it.next(iterator)
-        video = {'title': vid['title'], 
-        "channel_title": vid['channel_title'], 
-        "trending_date": vid['trending_date'], 
-        "country": vid['country'], 
-        'views': vid['views'], 
-        "likes": vid['likes'], 
-        "dislikes": vid['dislikes'], 
-        "category_id": vid['category_id'], 
-        "publish_time": vid["publish_time"], 
-        "tags": vid['tags']} 
-        lt.addLast(lvid, video)
-    return lvid
 
-def newCategory(catalog):
-    lc = lt.newList(datastructure="ARRAY_LIST")
-    iterator = it.newIterator(catalog["categories"])
-    while it.hasNext(iterator):
-        numbs = it.next(iterator)
-        isp = lt.isPresent(lc,numbs)
-        if isp > 0:
-            pass
-        else:
-        cat = {"Category number": numbs["id"], "Categoria" : numbs["name"]}
-        lt.addLast(lc,cat)
-        ""
-    return lc"""
 
 
 def first(lst):
@@ -197,8 +167,6 @@ def req2(catalog,country):
 def req3(catalog, category):
     idd = translateCategory(category,catalog)
     titles = catalog["ListCompleteVidAll"]
-    grande = 0
-    peq = 0
     cats = {}
     dick = {}
     iterator = it.newIterator(titles)
@@ -215,3 +183,22 @@ def req3(catalog, category):
     
     return {'title': b, 'channel_title': dick[b]['channel_title'], 'category_id': dick[b]["category_id"], 'número de días': a}
  
+def req4(catalog, tag, pais):
+    iterator = it.newIterator(catalog["ListCompleteVidAll"])
+    listags = lt.newList(datastructure="ARRAY_LIST") 
+    while it.hasNext(iterator):
+        element = it.next(iterator) 
+        tags = element["tags"].split("|")
+        rator = it.newIterator(tags)
+        while it.hasNext(terator):
+            mento = it.next(rator)
+            if element["country"].lower() == pais.lower() and tag.lower() in mento.lower():
+                dictags = {'title': element['title'],
+                "channel_title": element['channel_title'],
+                "publish_time": element["publish_time"],
+                'views': element['views'],
+                "likes": element['likes'], 
+                "dislikes": element['dislikes'],
+                "tags": element['tags']}
+                lt.addLast(listags,dictags)
+    return listags
