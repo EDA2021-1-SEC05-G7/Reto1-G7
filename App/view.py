@@ -102,7 +102,7 @@ while True:
         if size > lt.size(catalog['ListCompleteVidAll']):
             print("El numero de muestra seleccionado, excede el tamaño de la cantidad total de elementos que hay")
         else:
-            resul = controller.sortVideos(catalog,size,name,country)
+            resul = controller.req1(catalog,name,country,size)
             print(resul)
 
 
@@ -116,8 +116,14 @@ while True:
         category = input("Ingrese la categoria de la cual quiera saber el video que más fue tendencia: ")
         print(controller.req3(catalog,category))
     elif int(inputs[0]) == 5:
-        print('Buscar los videos con mas likes')
-
+        print('Buscar los videos con mas likes de un pais y con un tag determinados')
+        country = input("Ingrese el pais del cual  quiera conocer los videos con mas likes: ")
+        tag = input("Ingrese el tag del cual quiera saber los videos: ")
+        size = int(input("Ingrese la cantidad de videos que quiera conocer: "))
+        if size > lt.size(catalog['ListCompleteVidAll']):
+            print("El numero de muestra seleccionado, excede el tamaño de la cantidad total de elementos que hay")
+        else:
+            print(controller.req4(catalog,tag,country,size))
     else:
         sys.exit(0)
         

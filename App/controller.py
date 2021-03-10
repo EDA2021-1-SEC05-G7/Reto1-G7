@@ -77,18 +77,19 @@ def firstVideo(catalog):
 
 # Funciones de ordenamiento
 
-def sortVideos(catalog,size,name,country):
-    """
-    Ordena los libros por average_rating
-    """
-    return model.sortVideos(catalog,size,name,country)
-    
+def req1(catalog,name,country,size):
+    result = model.req1(catalog,name,country,size)
+    return result
 
 
 def req2(catalog, country):
-    return model.req2(catalog, country)
+    result = model.req2(catalog, country)
+    return result
 
 def req3(catalog,category):
     result = model.req3(catalog,category)
     return result
 
+def req4(catalog,tag,pais,size):
+    result = model.req4(catalog,tag,pais,size)
+    return result

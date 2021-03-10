@@ -79,7 +79,7 @@ def translateCategory(name,catalog):
         else:
             pass
 
-def req1(catalog,name,country):
+def req1(catalog,name,country,size):
     videos = catalog["ListCompleteVidAll"]
     idd = translateCategory(name,catalog)
     nl = lt.newList(datastructure="ARRAY_LIST")
@@ -95,7 +95,9 @@ def req1(catalog,name,country):
             "likes": element['likes'], 
             "dislikes": element['dislikes']}
             lt.addLast(nl,newdict)
-    return nl
+    ordenados = sortVideos(nl,size,cmpVideosByViews)
+
+    return ordenados
 
 
 
@@ -108,8 +110,6 @@ def first(lst):
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 
-
-
 def cmpVideosByViews(video1, video2): 
     """ Devuelve verdadero (True) si los 'views' de video1 son menores que los del video2 
     Args: 
@@ -117,17 +117,17 @@ def cmpVideosByViews(video1, video2):
         video2: informacion del segundo video que incluye su valor 'views' """
     return (float(video1['views']) > float(video2['views']))
 
-
+def cmpVideosByLikes(video1,video2):
+    return (float(video1['likes']) > float(video2['likes']))
 
 # Funciones de ordenamiento
 
-def sortVideos(catalog,size,name,country):
-    nueva = req1(catalog,name,country)
-    copia_lista = nueva.copy()
-    list_orden = mgs.sort(copia_lista, cmpVideosByViews)
-    resul = lt.subList(list_orden, 0, size)
-    return resul
 
+def sortVideos(lst,size,cmp):
+    copia_lista = lst.copy()
+    list_orden = mgs.sort(copia_lista, cmp)
+    resul = lt.subList(list_orden, 1, size)
+    return resul
 
 def req2(catalog,country):
     videos = catalog["ListCompleteVidAll"]
@@ -168,16 +168,17 @@ def req3(catalog, category):
     
     return {'title': b, 'channel_title': dick[b]['channel_title'], 'category_id': dick[b]["category_id"], 'número de días': a}
  
-def req4(catalog, tag, pais):
+def req4(catalog, tag, pais, size):
     iterator = it.newIterator(catalog["ListCompleteVidAll"])
     listags = lt.newList(datastructure="ARRAY_LIST") 
     while it.hasNext(iterator):
         element = it.next(iterator) 
         tags = element["tags"].split("|")
-        rator = it.newIterator(tags)
-        while it.hasNext(terator):
-            mento = it.next(rator)
-            if element["country"].lower() == pais.lower() and tag.lower() in mento.lower():
+        """rator = it.newIterator(tags)
+        while it.hasNext(rator):
+            mento = it.next(rator)"""
+        for i in tags:
+            if element["country"].lower() == pais.lower() and tag.lower() in i.lower():
                 dictags = {'title': element['title'],
                 "channel_title": element['channel_title'],
                 "publish_time": element["publish_time"],
@@ -186,4 +187,5 @@ def req4(catalog, tag, pais):
                 "dislikes": element['dislikes'],
                 "tags": element['tags']}
                 lt.addLast(listags,dictags)
-    return listags
+    ordenados = sortVideos(listags,size,cmpVideosByLikes)
+    return ordenados
