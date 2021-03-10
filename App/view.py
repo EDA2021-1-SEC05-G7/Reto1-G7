@@ -79,7 +79,7 @@ Menu principal
 """
 while True:
     printMenu()
-    inputs = input('Seleccione una opción para continuar\n')
+    inputs = input('Seleccione una opción para continuar\n(recuerde que antes de escoger cualquier opción tiene que cargar primero la información del catálogo)\n')
     if int(inputs[0]) == 1:
         catalog = controller.initCatalog()
         category = catalog["categories"]
@@ -97,19 +97,13 @@ while True:
     elif int(inputs[0]) == 2:
         print ("Encontrar buenos videos por categoría y país")
         size = int(input("¿De que tamaño quiere la lista?: "))
+        name = input("¿De que categoría desea saber los videos?: ")
+        country = input("¿De que pais desea saber los videos?: ")
         if size > lt.size(catalog['ListCompleteVidAll']):
             print("El numero de muestra seleccionado, excede el tamaño de la cantidad total de elementos que hay")
         else:
-            print("Elija el tipo de algoritmo de ordenamiento iterativo con el cual desea ordenar el catalogo de videos por vistas...")
-            print("Presione 1 para escoger Shell Sort")
-            print("Presione 2 para escoger Selection Sort")
-            print("Presione 3 para escoger Insertion Sort")
-            print("Presione 4 para escoger Quick Sort")
-            print("Presione 5 para escoger Merge Sort")
-            orden = int(input())
-            (a,b) = controller.sortVideos(catalog,size,orden)
-            print("El tiempo que ha tardado el proceso es:",a,"milisegundos.")
-            print(b)
+            resul = controller.sortVideos(catalog,size,name,country)
+            print(resul)
 
 
     elif int(inputs[0]) == 3:

@@ -79,7 +79,7 @@ def translateCategory(name,catalog):
         else:
             pass
 
-def req1(catalog,name,country,size):
+def req1(catalog,name,country):
     videos = catalog["ListCompleteVidAll"]
     idd = translateCategory(name,catalog)
     nl = lt.newList(datastructure="ARRAY_LIST")
@@ -115,32 +115,17 @@ def cmpVideosByViews(video1, video2):
     Args: 
         video1: informacion del primer video que incluye su valor 'views' 
         video2: informacion del segundo video que incluye su valor 'views' """
-    return (float(video1['views']) < float(video2['views']))
+    return (float(video1['views']) > float(video2['views']))
 
 
 
 # Funciones de ordenamiento
 
-def sortVideos(catalog,size,orden):
-    nueva = lt.subList(catalog["ListCompleteVidAll"],0,size)
+def sortVideos(catalog,size,name,country):
+    nueva = req1(catalog,name,country)
     copia_lista = nueva.copy()
-    start_time = time.process_time()
-    list_orden = orden
-    if orden == 1:
-        list_orden = sa.sort(copia_lista, cmpVideosByViews)
-    elif orden == 2:
-        list_orden = ss.sort(copia_lista, cmpVideosByViews)
-    elif orden == 3:
-        list_orden = ins.sort(copia_lista, cmpVideosByViews)
-    elif orden == 4:
-        list_orden = qs.sort(copia_lista, cmpVideosByViews)
-    elif orden == 5:
-        list_orden = mgs.sort(copia_lista, cmpVideosByViews)
-    else:
-        return "Ha seleccionado una opcion invalida"
-    stop_time = time.process_time()
-    elapsed_time_mseg = (stop_time - start_time)*1000
-    resul = (elapsed_time_mseg, list_orden)
+    list_orden = mgs.sort(copia_lista, cmpVideosByViews)
+    resul = lt.subList(list_orden, 0, size)
     return resul
 
 

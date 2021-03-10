@@ -77,11 +77,11 @@ def firstVideo(catalog):
 
 # Funciones de ordenamiento
 
-def sortVideos(catalog,size,orden):
+def sortVideos(catalog,size,name,country):
     """
     Ordena los libros por average_rating
     """
-    return model.sortVideos(catalog,size,orden)
+    return model.sortVideos(catalog,size,name,country)
     
 
 
