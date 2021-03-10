@@ -174,16 +174,6 @@ def sortVideos(catalog,size,orden):
     return resul
 
 
-
-
-
-
-
-
-
-
-
-
 def req2(catalog,country):
     videos = catalog["ListCompleteVidAll"]
     dictitles = {}
