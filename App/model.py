@@ -150,7 +150,7 @@ def req2(catalog,country):
     return {'title': b, 'channel_title': dicsave[b]['channel_title'], 'country': country, 'número de días': a}
 
 def req3(catalog, category):
-    #Hecho por Ernesto José Duarte
+    #Hecho por Ernesto José Duartex
     idd = translateCategory(category,catalog)
     titles = catalog["ListCompleteVidAll"]
     cats = {}
