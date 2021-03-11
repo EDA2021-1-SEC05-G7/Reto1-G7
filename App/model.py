@@ -61,13 +61,11 @@ def newCatalog():
 def addVideo(catalog, videos):
     lt.addLast(catalog['ListCompleteVidAll'], videos)
 
-
-
 def addCat(catalog, cat):
     lt.addLast(catalog["categories"],cat)
 
 
-# Funciones Req1    
+# Adicionales
 
 def translateCategory(name,catalog):
     categories = catalog["categories"]
@@ -78,29 +76,6 @@ def translateCategory(name,catalog):
             return element["id"]
         else:
             pass
-
-def req1(catalog,name,country,size):
-    videos = catalog["ListCompleteVidAll"]
-    idd = translateCategory(name,catalog)
-    nl = lt.newList(datastructure="ARRAY_LIST")
-    iterator = it.newIterator(videos)
-    while it.hasNext(iterator):
-        element = it.next(iterator)
-        if element["country"].lower() == country.lower() and element["category_id"] == idd:
-            newdict = {"trending_date": element['trending_date'],
-            'title': element['title'],
-            "channel_title": element['channel_title'],
-            "publish_time": element["publish_time"],
-            'views': element['views'],
-            "likes": element['likes'], 
-            "dislikes": element['dislikes']}
-            lt.addLast(nl,newdict)
-    ordenados = sortVideos(nl,size,cmpVideosByViews)
-
-    return ordenados
-
-
-
 
 def first(lst):
     element = lt.firstElement(lst)
@@ -120,8 +95,9 @@ def cmpVideosByViews(video1, video2):
 def cmpVideosByLikes(video1,video2):
     return (float(video1['likes']) > float(video2['likes']))
 
-# Funciones de ordenamiento
 
+
+# Funciones de ordenamiento
 
 def sortVideos(lst,size,cmp):
     copia_lista = lst.copy()
@@ -129,13 +105,37 @@ def sortVideos(lst,size,cmp):
     resul = lt.subList(list_orden, 1, size)
     return resul
 
+# Requerimientos
+
+def req1(catalog,name,country,size):
+    videos = catalog["ListCompleteVidAll"]
+    idd = translateCategory(name,catalog)
+    nl = lt.newList(datastructure="ARRAY_LIST")
+    iterator = it.newIterator(videos)
+    while it.hasNext(iterator):
+        element = it.next(iterator)
+        if element["country"].lower() == country.lower() and element["category_id"] == idd:
+            newdict = {"trending_date": element['trending_date'],
+            'title': element['title'],
+            "channel_title": element['channel_title'],
+            "publish_time": element["publish_time"],
+            'views': element['views'],
+            "likes": element['likes'], 
+            "dislikes": element['dislikes']}
+            lt.addLast(nl,newdict)
+    if lt.size(nl) > 0:
+        ordenados = sortVideos(nl,size,cmpVideosByViews)
+    else:
+        ordenados = "No se han encontrado videos de ese pais con esa categoria"
+
+    return ordenados
+
 def req2(catalog,country):
+    #Hecho por Ana Sofia Padilla
     videos = catalog["ListCompleteVidAll"]
     dictitles = {}
     dicsave = {}
     iterator = it.newIterator(videos)
-    mayor = 0
-    nomayor = 0
     while it.hasNext(iterator):
         element = it.next(iterator)
         if element["country"].lower() == country.lower():
@@ -150,6 +150,7 @@ def req2(catalog,country):
     return {'title': b, 'channel_title': dicsave[b]['channel_title'], 'country': country, 'número de días': a}
 
 def req3(catalog, category):
+    #Hecho por Ernesto José Duarte
     idd = translateCategory(category,catalog)
     titles = catalog["ListCompleteVidAll"]
     cats = {}
@@ -165,18 +166,15 @@ def req3(catalog, category):
                 dick[element["title"]] = element
 
     (a, b) = max((cats[key], key) for key in cats)
-    
+
     return {'title': b, 'channel_title': dick[b]['channel_title'], 'category_id': dick[b]["category_id"], 'número de días': a}
- 
+
 def req4(catalog, tag, pais, size):
     iterator = it.newIterator(catalog["ListCompleteVidAll"])
     listags = lt.newList(datastructure="ARRAY_LIST") 
     while it.hasNext(iterator):
         element = it.next(iterator) 
         tags = element["tags"].split("|")
-        """rator = it.newIterator(tags)
-        while it.hasNext(rator):
-            mento = it.next(rator)"""
         for i in tags:
             if element["country"].lower() == pais.lower() and tag.lower() in i.lower():
                 dictags = {'title': element['title'],
@@ -187,5 +185,8 @@ def req4(catalog, tag, pais, size):
                 "dislikes": element['dislikes'],
                 "tags": element['tags']}
                 lt.addLast(listags,dictags)
-    ordenados = sortVideos(listags,size,cmpVideosByLikes)
+    if size > lt.size(listags):
+        ordenados = 0
+    else:
+        ordenados = sortVideos(listags,size,cmpVideosByLikes)
     return ordenados

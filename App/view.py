@@ -51,10 +51,6 @@ def printMenu():
     
 catalog = None
 
-
-    
-
-
 def loadData(catalog):
     """
     Carga los libros en la estructura de datos
@@ -70,9 +66,6 @@ def printFirstVideo(catalog):
     "likes": pvid['likes'], 
     "dislikes": pvid['dislikes']}
     return infoprim
-
-
-
 
 """
 Menu principal
@@ -104,8 +97,6 @@ while True:
         else:
             resul = controller.req1(catalog,name,country,size)
             print(resul)
-
-
     elif int(inputs[0]) == 3:
         print ("Encontrar video tendencia por país")
         country = input("Ingrese el nombre del país del cual quiere saber el video que más fue tendencia: ")
@@ -120,10 +111,11 @@ while True:
         country = input("Ingrese el pais del cual  quiera conocer los videos con mas likes: ")
         tag = input("Ingrese el tag del cual quiera saber los videos: ")
         size = int(input("Ingrese la cantidad de videos que quiera conocer: "))
-        if size > lt.size(catalog['ListCompleteVidAll']):
+        result = controller.req4(catalog,tag,country,size)
+        if result == 0:
             print("El numero de muestra seleccionado, excede el tamaño de la cantidad total de elementos que hay")
         else:
-            print(controller.req4(catalog,tag,country,size))
+            print(result)
     else:
         sys.exit(0)
         

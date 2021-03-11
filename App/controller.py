@@ -39,14 +39,8 @@ def initCatalog():
 
     return catalog
 
-    
 
 def loadData(catalog):
-    """
-    Carga los libros del archivo.  Por cada libro se toman sus autores y por
-    cada uno de ellos, se crea en la lista de autores, a dicho autor y una
-    referencia al libro que se esta procesando.
-    """
     videosfile = cf.data_dir + 'videos-large.csv'
     input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
     for video in input_file:
@@ -56,31 +50,18 @@ def loadData(catalog):
     for cat in input_cat_file:
         model.addCat(catalog, cat)
 
-
-
-#catalog = initCatalog()
-#loadData(catalog)
-#print(newCategory(catalog))
-#print(model.translateCategory("music",catalog))
-#print(model.req1(catalog,"Music","canada",0))
-#print(req3(catalog,"music"))
-#print(firstVideo(catalog))
-
-
-
-
+# Adicional
 
 def firstVideo(catalog):
     Pvideo = model.first(catalog['ListCompleteVidAll'])
     return Pvideo
 
 
-# Funciones de ordenamiento
+# Requerimientos
 
 def req1(catalog,name,country,size):
     result = model.req1(catalog,name,country,size)
     return result
-
 
 def req2(catalog, country):
     result = model.req2(catalog, country)
