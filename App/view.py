@@ -97,15 +97,20 @@ while True:
         else:
             resul = controller.req1(catalog,name,country,size)
             print(resul)
+        
+            
     elif int(inputs[0]) == 3:
         print ("Encontrar video tendencia por país")
         country = input("Ingrese el nombre del país del cual quiere saber el video que más fue tendencia: ")
         print(controller.req2(catalog, country))
         
+
     elif int(inputs[0]) == 4:
         print('Encontrar videos tendencias por categoría')
         category = input("Ingrese la categoria de la cual quiera saber el video que más fue tendencia: ")
         print(controller.req3(catalog,category))
+
+
     elif int(inputs[0]) == 5:
         print('Buscar los videos con mas likes de un pais y con un tag determinados')
         country = input("Ingrese el pais del cual  quiera conocer los videos con mas likes: ")
